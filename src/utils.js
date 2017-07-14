@@ -35,5 +35,5 @@ export function getElementId(selector) {
     if (selector.startsWith("#")) {
         return document.getElementById(selector.substring(1, selector.length));
     }
-    return selector;
+    return null;
 }
