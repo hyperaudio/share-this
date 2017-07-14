@@ -55,4 +55,13 @@ describe("Package utilities", () => {
             expect(utils.isCallable({})).to.be.false;
         });
     });
+
+    describe("getElementId", () => {
+        it("must remove the # from start of string if exists", () => {
+            expect(utils.getElementId("#foo")).to.equal("foo");
+        });
+        it("must return string unchanged if does not start with #", () => {
+            expect(utils.getElementId("foo")).to.equal("foo");
+        });
+    });
 });
