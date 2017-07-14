@@ -1,5 +1,5 @@
 import { getOffsetScroll, closest } from "./dom";
-import { findByName, isCallable } from "./utils";
+import { findByName, isCallable, getElementId } from "./utils";
 import { isSelectionForward, getEndLineRect } from "./selection";
 
 export function stylePopover(popover, range, options) {
@@ -9,6 +9,7 @@ export function stylePopover(popover, range, options) {
     const isForward = isSelectionForward(selection);
     const endLineRect = getEndLineRect(range, isForward);
     const offsetScroll = getOffsetScroll(_window);
+    const selectorElement = getElementId(options.selector);
 
     const style = popover.style;
     if (isForward) {
@@ -20,6 +21,16 @@ export function stylePopover(popover, range, options) {
     style.width = `${endLineRect.right - endLineRect.left}px`;
     style.height = `${endLineRect.bottom - endLineRect.top}px`;
     style.top = `${endLineRect.top - offsetScroll.top}px`;
+
+    const startTop = endLineRect.top - offsetScroll.top;
+
+    if (selectorElement) {
+        const offset = selectorElement.scrollTop - selectorElement.getBoundingClientRect().top;
+        style.top = `${startTop + offset}px`;
+    } else {
+        style.top = `${startTop}px`;
+    }
+
     style.position = "absolute";
 
     // eslint-disable-next-line no-param-reassign
@@ -38,7 +49,7 @@ export function popoverClick(sharers, event) {
     }
 }
 
-export function lifeCycleFactory(document) {
+export function lifeCycleFactory(document, options) {
     return {
         createPopover() {
             const popover = document.createElement("div");
@@ -48,7 +59,13 @@ export function lifeCycleFactory(document) {
             return popover;
         },
         attachPopover(popover) {
-            document.body.appendChild(popover);
+            const selectorElement = getElementId(options.selector);
+
+            if (selectorElement) {
+                selectorElement.appendChild(popover);
+            } else {
+                document.body.appendChild(popover);
+            }
         },
         removePopover(popover) {
             const parent = popover.parentNode;

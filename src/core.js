@@ -39,7 +39,7 @@ export default (opts) => {
             eventTypes.forEach(addListener);
             _window.addEventListener("resize", resizeHandler);
 
-            lifeCycle = lifeCycleFactory(_document);
+            lifeCycle = lifeCycleFactory(_document, options);
 
             return initialized = true;
         },
