@@ -25,8 +25,18 @@ export function stylePopover(popover, range, options) {
     const startTop = endLineRect.top - offsetScroll.top;
 
     if (selectorElement) {
-        const offset = selectorElement.scrollTop - selectorElement.getBoundingClientRect().top;
+        let offset = selectorElement.scrollTop - selectorElement.getBoundingClientRect().top;
+        console.log("  selectorElement.scrollTop = " + selectorElement.scrollTop);
+        console.log("- selectorElement.getBoundingClientRect().top = " + selectorElement.getBoundingClientRect().top);
+        console.log("=========================");
+        console.log("  offset = " + offset);
+        console.log("=========================");
+        offset += offsetScroll.top;
+        console.log("offsetScroll.top = " + offsetScroll.top);
+        console.log("offset += offsetScroll.top = " + offset);
+        console.log("=========================");
         style.top = `${startTop + offset}px`;
+        console.log("style.top = `startTop + offset px` = " + style.top);
     } else {
         style.top = `${startTop}px`;
     }
