@@ -14,6 +14,8 @@ import cssnano from "gulp-cssnano";
 
 import eslint from "gulp-eslint";
 
+import sourcemaps from "gulp-sourcemaps";
+
 import { camelize } from "./src/utils";
 
 gulp.task("js", () => {
@@ -30,8 +32,10 @@ gulp.task("sharers", () => {
 
 gulp.task("less", () => {
     gulp.src("./style/less/share-this.less")
+        .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(cssnano({ autoprefixer: false }))
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest("dist/"))
     ;
 });
@@ -64,7 +68,9 @@ function buildJsEntry(file, name, standalone, output) {
     })
         .pipe(source(`${name}.js`))
         .pipe(buffer())
+        .pipe(sourcemaps.init())
         .pipe(uglify())
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest(output))
     ;
 }

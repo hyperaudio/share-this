@@ -51,5 +51,8 @@
     "sinon-chai": "^2.8.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "gulp-sourcemaps": "^2.6.3"
   }
 }
