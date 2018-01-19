@@ -1,5 +1,5 @@
 import { getOffsetScroll, closest } from "./dom";
-import { findByName, isCallable, getElementId } from "./utils";
+import { findByName, isCallable } from "./utils";
 import { isSelectionForward, getEndLineRect } from "./selection";
 
 export function stylePopover(popover, range, options) {
@@ -9,7 +9,7 @@ export function stylePopover(popover, range, options) {
     const isForward = isSelectionForward(selection);
     const endLineRect = getEndLineRect(range, isForward);
     const offsetScroll = getOffsetScroll(_window);
-    const selectorElement = getElementId(options.selector);
+    const selectorElement = document.querySelector(options.selector);
 
     const style = popover.style;
     if (isForward) {
@@ -60,7 +60,7 @@ export function lifeCycleFactory(document, options) {
             return popover;
         },
         attachPopover(popover) {
-            const selectorElement = getElementId(options.selector);
+            const selectorElement = document.querySelector(options.selector);
 
             if (selectorElement) {
                 selectorElement.appendChild(popover);

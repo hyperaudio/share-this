@@ -30,10 +30,3 @@ export function extend(dest, source) {
 export function isCallable(func) {
     return typeof func === "function";
 }
-
-export function getElementId(selector) {
-    if (selector.startsWith("#")) {
-        return document.getElementById(selector.substring(1, selector.length));
-    }
-    return null;
-}
